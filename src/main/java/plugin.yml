@@ -1,0 +1,53 @@
+﻿name: ChestShop
+version: ${project.version}
+author: Acrobot
+
+main: com.Acrobot.ChestShop.ChestShop
+
+description: A sign&chest shop for economy plugins
+
+softdepend: [Permissions, LWC, Lockette, Deadbolt, OddItem]
+
+commands:
+  iteminfo:
+    aliases: [iinfo]
+    description: Shows the item id and name
+    usage: |
+           /<command> §2(what's the item in hand?)
+           /<command> §712§f §2(what's the item with ID §712§2?)
+           /<command> §7log§f §2(what's the item ID of §7LOG§2?) 
+  csversion:
+    description: Shows ChestShop's version
+    usage: /<command>
+    
+permissions:
+  ChestShop.*:
+    description: Gives access to all ChestShop permissions
+    default: op
+    children:
+        ChestShop.shop.*: true
+        ChestShop.admin: true
+  ChestShop.shop.*:
+    description: Gives access to all user ChestShop permissions
+    children:
+        ChestShop.shop.create: true
+        ChestShop.shop.buy: true
+        ChestShop.shop.sell: true
+    default: true
+  ChestShop.shop.create.(itemID):
+    description: Allows user to create a shop that sells item with itemID like in the permission node (replace (itemID) with NUMERICAL item ID)
+  ChestShop.shop.buy.(itemID):
+    description: Allows user to buy certain (itemID) from a shop (replace (itemID) with NUMERICAL item ID)
+  ChestShop.shop.sell.(itemID):
+    description: Allows user to sell certain (itemID) from a shop (replace (itemID) with NUMERICAL item ID)
+  ChestShop.shop.create:
+    description: Allows user to create a shop that sells any item
+  ChestShop.shop.buy:
+    description: Allows user to buy from a shop
+  ChestShop.shop.sell:
+    description: Allows user to sell to a shop
+  ChestShop.admin:
+    description: Allows user to modify/destroy other stores and create an Admin Shops
+    default: op
+  ChestShop.mod:
+    description: Allows user only to view other store chests, he can't destroy them or create an Admin Shop
