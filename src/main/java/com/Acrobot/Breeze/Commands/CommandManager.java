@@ -3,9 +3,11 @@ package com.Acrobot.Breeze.Commands;
 import com.Acrobot.Breeze.Breeze;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.craftbukkit.CraftServer;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 /**
@@ -18,11 +20,13 @@ public class CommandManager {
     public CommandManager(Breeze br) {
         this.br = br;
         try {
-            Field f = br.getPlugin().getServer().getClass().getField("commandMap");
+            Field f = CraftServer.class.getDeclaredField("commandMap");
             f.setAccessible(true);
-            scm = (SimpleCommandMap) f.get(br.getPlugin().getServer());
+
+            scm = (SimpleCommandMap) f.get(br.getPlugin().getServer()); //Please bring the dynamic command registering in Bukkit.
         } catch (Exception e) {
-            br.logger.severe("It seems like you aren't using CraftBukkit o.0");
+            br.logger.severe("It seems like you aren't using CraftBukkit - " +
+                    "at the moment, dynamic command registering is not in Bukkit (so it had to be modded in), sorry!");
         }
     }
 
@@ -33,7 +37,7 @@ public class CommandManager {
      * @return was the registering successful
      */
     private boolean registerCommand(org.bukkit.command.Command command) {
-        return scm.getCommand(command.getName()) != null && scm.register(br.getPlugin().getDescription().getName().toLowerCase(), command);
+        return scm.getCommand(command.getName()) == null && scm.register(br.getPlugin().getDescription().getName().toLowerCase(), command);
     }
 
     /**
@@ -43,7 +47,9 @@ public class CommandManager {
      */
     public void registerCommand(Class clazz) {
         for (final Method m : clazz.getMethods()) {
-            if (!m.isAnnotationPresent(Command.class)) continue; //If there is no command annotation, skip this method
+            if (!m.isAnnotationPresent(Command.class) || !Modifier.isStatic(m.getModifiers())) continue; //If there is no command annotation, skip this method
+
+            System.out.println(Arrays.toString(m.getGenericParameterTypes()));
 
             final Command command = m.getAnnotation(Command.class); //Get command
 
@@ -59,6 +65,7 @@ public class CommandManager {
                         return (Boolean) m.invoke(null, commandSender, currentAlias, args);
                     } catch (Exception e) {
                         br.logger.severe("Error occurred while executing command " + command.command());
+                        System.out.println(e.getMessage());
                         return false;
                     }
                 }

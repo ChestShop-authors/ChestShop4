@@ -1,6 +1,7 @@
 package com.Acrobot.ChestShop;
 
 import com.Acrobot.Breeze.Breeze;
+import com.Acrobot.ChestShop.Modules.TestModule.TestModule;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -15,6 +16,8 @@ public class ChestShop extends JavaPlugin {
      */
     public void onEnable() {
         breeze = new Breeze(this);
+
+        registerDefaultModules();
     }
 
     /**
@@ -29,5 +32,14 @@ public class ChestShop extends JavaPlugin {
      */
     public static Breeze getBreeze() {
         return breeze;
+    }
+
+    /**
+     * Registers the default modules
+     */
+    private void registerDefaultModules(){
+        breeze.registerModule(new TestModule());
+
+        breeze.loadPlugins();
     }
 }

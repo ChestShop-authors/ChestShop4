@@ -1,5 +1,6 @@
 package com.Acrobot.Breeze.Plugins.BreezePlugin;
 
+import com.Acrobot.Breeze.Breeze;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -7,9 +8,10 @@ import java.io.File;
 /**
  * @author Acrobot
  */
-public abstract class BreezePlugin implements EnablingPlugin{
+public abstract class BreezePlugin implements EnablingPlugin, NamedPlugin{
     private File dataFolder;
     private JavaPlugin plugin;
+    private Breeze breeze;
 
     public BreezePlugin() {}
 
@@ -25,19 +27,28 @@ public abstract class BreezePlugin implements EnablingPlugin{
      * Returns the main plugin class
      * @return plugin class
      */
-    public JavaPlugin getMainPlugin(){
+    public JavaPlugin getPlugin(){
         return plugin;
+    }
+
+    /**
+     * Returns the Breeze object
+     * @return
+     */
+    public Breeze getBreeze(){
+        return breeze;
     }
 
     /**
      * Initializes the plugin
      * Shouldn't be called manually.
      * @param dataFolder The folder where the plugin should store its files
-     * @param plugin The main plugin class
+     * @param breeze The Breeze object
      */
-    public final void initialize(File dataFolder, JavaPlugin plugin){
+    public final void initialize(File dataFolder, Breeze breeze){
         this.dataFolder = dataFolder;
-        this.plugin = plugin;
+        this.plugin = breeze.getPlugin();
+        this.breeze = breeze;
 
         onEnable();
     }

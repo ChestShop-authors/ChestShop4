@@ -32,6 +32,8 @@ public class PluginLoader {
         for (File file : pluginFolder.listFiles()) {
             loadPlugin(file);
         }
+
+        enablePlugins();
     }
 
     /**
@@ -60,6 +62,16 @@ public class PluginLoader {
         } catch (Exception ex) {
             breeze.logger.severe("Couldn't load Breeze plugin: " + plugin.getName());
             return null;
+        }
+    }
+
+    /**
+     * Enables all the plugins
+     */
+    private void enablePlugins() {
+        for (BreezePlugin plugin : plugins) {
+            plugin.initialize(new File(breeze.getPlugin().getDataFolder() + File.pathSeparator + plugin.getName()), breeze);
+            breeze.logger.info(plugin.getName() + " successfully enabled!");
         }
     }
 }

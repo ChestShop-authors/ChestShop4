@@ -1,11 +1,13 @@
 package com.Acrobot.Breeze.Logging;
 
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 /**
  * @author Acrobot
  */
 public class LogManager {
+    private final LogFormatter formatter = null;
+
     /**
      * Initializes log formatter
      *
@@ -13,12 +15,13 @@ public class LogManager {
      * @return The same logger
      */
     public static Logger init(Logger log) {
-        LogFormatter formatter = new LogFormatter('[' + log.getName() + "] ");
+        final LogFormatter formatter = new LogFormatter('[' + log.getName() + "] ");
+        
+        Handler handler = new LogHandler();
+        handler.setFormatter(formatter);
 
-        log.setParent(Logger.getLogger("Minecraft"));
-
-        log.getHandlers()[0].setFormatter(formatter); //Probably a bad idea, we'll see.
-        //TODO: Change the thing above if it won't work
+        log.addHandler(handler);
+        log.setUseParentHandlers(false);
 
         return log;
     }
