@@ -11,11 +11,23 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
 public @interface Command {
+    /**
+     * @return The command
+     */
     String command();
 
+    /**
+     * @return Aliases of the command
+     */
     String[] aliases();
 
+    /**
+     * @return Command's description
+     */
     String description();
 
+    /**
+     * @return Command's syntax
+     */
     String syntax();
 }

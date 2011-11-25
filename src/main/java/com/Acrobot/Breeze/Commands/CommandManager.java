@@ -49,8 +49,6 @@ public class CommandManager {
         for (final Method m : clazz.getMethods()) {
             if (!m.isAnnotationPresent(Command.class) || !Modifier.isStatic(m.getModifiers())) continue; //If there is no command annotation, skip this method
 
-            System.out.println(Arrays.toString(m.getGenericParameterTypes()));
-
             final Command command = m.getAnnotation(Command.class); //Get command
 
             org.bukkit.command.Command cmd = new org.bukkit.command.Command( //Create a new bukkit command

@@ -10,6 +10,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -27,37 +28,71 @@ public class Breeze {
         this.plugin = plugin;
 
         logger = LogManager.init(Logger.getLogger(plugin.getDescription().getName()));
-        
+
         loader = new PluginLoader(this);
         cmdManager = new CommandManager(this);
         eventManager = new EventManager(this);
     }
 
+    /**
+     * Gets the configuration object
+     *
+     * @param name Config's name
+     * @return Configuration
+     */
     public Configuration getConfig(String name) {
-        return getConfig(name, null);
+        return getConfig(name, new HashMap<String, Object>());
     }
 
+    /**
+     * @return The bukkit plugin
+     */
     public JavaPlugin getPlugin() {
         return plugin;
     }
 
+    /**
+     * Gets the configuration object
+     *
+     * @param name Config's name
+     * @param defaults Default values
+     * @return Configuration
+     */
     public Configuration getConfig(String name, Map<String, Object> defaults) {
         return new Config(plugin.getDataFolder(), name, defaults).getConfiguration();
     }
 
+    /**
+     * Registers the commands class
+     *
+     * @param clazz The class
+     */
     public void registerCommands(Class clazz) {
         cmdManager.registerCommand(clazz);
     }
 
+    /**
+     * Registers the event class
+     *
+     * @param clazz The class
+     */
     public void registerEvents(Class clazz) {
         eventManager.registerEvents(clazz);
     }
 
+    /**
+     * Registers a module (plugin)
+     *
+     * @param plugin The Breeze plugin to register
+     */
     public void registerModule(BreezePlugin plugin) {
         loader.plugins.add(plugin);
     }
 
-    public void loadPlugins(){
+    /**
+     * Loads all plugins
+     */
+    public void loadPlugins() {
         loader.loadPlugins(new File(plugin.getDataFolder() + File.separator + "plugins"));
     }
 }

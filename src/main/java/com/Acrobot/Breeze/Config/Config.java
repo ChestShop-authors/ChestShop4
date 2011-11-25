@@ -40,6 +40,9 @@ public class Config {
         } catch (Exception ignored) {}
     }
 
+    /**
+     * @return Configuration object
+     */
     public Configuration getConfiguration() {
         return config;
     }
