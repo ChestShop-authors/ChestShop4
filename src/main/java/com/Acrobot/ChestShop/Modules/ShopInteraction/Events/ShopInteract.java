@@ -26,12 +26,9 @@ public class ShopInteract extends CustomEventListener {
         ShopInteractionEvent event = (ShopInteractionEvent) e;
         Player p = event.getPlayer();
 
-        if (time.containsKey(p) && (time.get(p) - System.currentTimeMillis()) < 200) {
-            event.setCancelled(true);
-            return;
-        }
+        if (!checkTime(p, event)) return; //Check the last time the shop was used
 
-        if (!correctSign(event.getLines())){
+        if (!correctSign(event.getLines())) {
             event.setCancelled(true);
             event.setCancelMessage("Asd"); //TODO: Add the stuff from config
         }
@@ -39,15 +36,23 @@ public class ShopInteract extends CustomEventListener {
 
     /**
      * Is the sign correct?
+     *
      * @param lines The sign lines
      * @return Is the sign correct
      */
     private static boolean correctSign(String[] lines) {
         boolean right = true;
-        for (int i = 0; i < 4 && right; i++){
-            right = patterns[i].matcher(lines[i]).matches();
-            System.out.println("Pattern: " + patterns[i].pattern() + " matches? " + lines[i] + " ? " + patterns[i].matcher(lines[i]).matches()); //TODO Change that
-        }
+        for (int i = 0; i < 4 && right; i++) right = patterns[i].matcher(lines[i]).matches();
         return right;
+    }
+
+    private static boolean checkTime(Player p, ShopInteractionEvent e) {
+        if (time.containsKey(p) && (time.get(p) - System.currentTimeMillis()) < 200) {
+            e.setCancelled(true);
+            return false;
+        }
+        time.put(p, System.currentTimeMillis());
+
+        return true;
     }
 }

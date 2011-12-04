@@ -2,6 +2,7 @@ package com.Acrobot.Breeze;
 
 import com.Acrobot.Breeze.Commands.CommandManager;
 import com.Acrobot.Breeze.Config.Config;
+import com.Acrobot.Breeze.Config.ConfigObject;
 import com.Acrobot.Breeze.Events.EventManager;
 import com.Acrobot.Breeze.Logging.LogManager;
 import com.Acrobot.Breeze.Plugins.BreezePlugin.BreezePlugin;
@@ -41,7 +42,7 @@ public class Breeze {
      * @return Configuration
      */
     public Configuration getConfig(String name) {
-        return getConfig(name, new HashMap<String, Object>());
+        return getConfig(name, new HashMap<String, ConfigObject>());
     }
 
     /**
@@ -58,7 +59,7 @@ public class Breeze {
      * @param defaults Default values
      * @return Configuration
      */
-    public Configuration getConfig(String name, Map<String, Object> defaults) {
+    public Configuration getConfig(String name, Map<String, ConfigObject> defaults) {
         return new Config(plugin.getDataFolder(), name, defaults).getConfiguration();
     }
 
@@ -94,5 +95,18 @@ public class Breeze {
      */
     public void loadPlugins() {
         loader.loadPlugins(new File(plugin.getDataFolder() + File.separator + "plugins"));
+    }
+
+    /**
+     * Does everything it can during a reload
+     */
+    public void disable(){
+        loader.plugins = null;
+
+        this.plugin = null;
+        this.cmdManager = null;
+        this.eventManager = null;
+        this.logger = null;
+        this.loader = null;
     }
 }

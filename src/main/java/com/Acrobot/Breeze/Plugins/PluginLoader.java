@@ -74,4 +74,8 @@ public class PluginLoader {
             breeze.logger.info(plugin.getName() + " successfully enabled!");
         }
     }
+
+    public void unregisterModule(){
+        
+    }
 }

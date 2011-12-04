@@ -17,12 +17,12 @@ public class PlayerInteract extends PlayerListener{
     @Event(type = org.bukkit.event.Event.Type.PLAYER_INTERACT)
     public void onPlayerInteract(PlayerInteractEvent event){
         Block block = event.getClickedBlock();
-        if (!(block.getState() instanceof Sign)) return;
+        if (block == null || !(block.getState() instanceof Sign)) return;
 
         Sign sign = (Sign) block.getState();
         Action action = event.getAction();
 
-        ShopInteractionEvent e = new ShopInteractionEvent(sign.getLines(), action);
+        ShopInteractionEvent e = new ShopInteractionEvent(sign.getLines(), action, event.getPlayer());
         ChestShop.callEvent(e);
         String message = e.getCancelMessage();
         if (e.isCancelled() && message != null) event.getPlayer().sendMessage(message);

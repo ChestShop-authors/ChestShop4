@@ -1,8 +1,8 @@
 package com.Acrobot.ChestShop;
 
 import com.Acrobot.Breeze.Breeze;
+import com.Acrobot.ChestShop.Modules.ShopCreation.ShopCreation;
 import com.Acrobot.ChestShop.Modules.ShopInteraction.ShopInteraction;
-import com.Acrobot.ChestShop.Modules.TestModule.TestModule;
 import org.bukkit.Server;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -30,6 +30,10 @@ public class ChestShop extends JavaPlugin {
      * Called on plugin disable
      */
     public void onDisable() {
+        breeze.disable();
+
+        breeze = null;
+        server = null;
     }
 
     /**
@@ -45,7 +49,7 @@ public class ChestShop extends JavaPlugin {
      * Registers the default modules
      */
     private void registerDefaultModules() {
-        breeze.registerModule(new TestModule());
+        breeze.registerModule(new ShopCreation());
         breeze.registerModule(new ShopInteraction());
 
         breeze.loadPlugins();

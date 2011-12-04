@@ -22,7 +22,7 @@ public class Config {
         this.config = YamlConfiguration.loadConfiguration(file);
     }
 
-    public Config(File folder, String configName, Map<String, Object> values) {
+    public Config(File folder, String configName, Map<String, ConfigObject> values) {
         this(folder, configName);
         if (values != null) generateDefaults(values);
     }
@@ -32,12 +32,20 @@ public class Config {
      *
      * @param values Values to put in the config
      */
-    private void generateDefaults(Map<String, Object> values) {
-        for (String o : values.keySet()) config.addDefault(o, values.get(o));
+    private void generateDefaults(Map<String, ConfigObject> values) {
+        for (String o : values.keySet()){
+            if (config.contains(o)) continue;
+            ConfigObject obj = values.get(o);
+            config.set(null, "asdasdasd");
+            config.set(o, (obj.comment == null ? obj.value : retrieveValueWithComment(obj)));
+        }
         config.options().copyDefaults();
-        try {
-            config.save(file);
+        try { config.save(file);
         } catch (Exception ignored) {}
+    }
+    
+    private String retrieveValueWithComment(ConfigObject o){
+        return o.value + "\n#" + o.comment;
     }
 
     /**
