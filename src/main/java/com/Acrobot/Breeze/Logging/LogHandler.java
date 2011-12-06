@@ -10,13 +10,18 @@ import java.util.logging.Logger;
  */
 public class LogHandler extends Handler{
     private static final Logger global = Logger.getLogger("");
+    private String prefix;
+
+    public LogHandler(String prefix){
+        this.prefix = prefix;
+    }
 
     @Override
     public void publish(LogRecord logRecord) {
         Level level = logRecord.getLevel();
         String message = logRecord.getMessage();
 
-        global.log(level, message);
+        global.log(level, prefix + message);
     }
 
     @Override

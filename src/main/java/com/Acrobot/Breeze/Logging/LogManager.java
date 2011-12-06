@@ -6,22 +6,18 @@ import java.util.logging.*;
  * @author Acrobot
  */
 public class LogManager {
-    private final LogFormatter formatter = null;
 
     /**
-     * Initializes log formatter
+     * Initializes the logger
      *
      * @param log Logger
      * @return The same logger
      */
     public static Logger init(Logger log) {
-        final LogFormatter formatter = new LogFormatter('[' + log.getName() + "] ");
-        
-        Handler handler = new LogHandler();
-        handler.setFormatter(formatter);
+        Handler handler = new LogHandler('[' + log.getName() + "] ");
 
-        log.addHandler(handler);
         log.setUseParentHandlers(false);
+        log.addHandler(handler);
 
         return log;
     }
