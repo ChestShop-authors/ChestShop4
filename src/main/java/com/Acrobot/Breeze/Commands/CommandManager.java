@@ -47,7 +47,8 @@ public class CommandManager {
      */
     public void registerCommand(Class clazz) {
         for (final Method m : clazz.getMethods()) {
-            if (!m.isAnnotationPresent(Command.class) || !Modifier.isStatic(m.getModifiers())) continue; //If there is no command annotation, skip this method
+            if (!m.isAnnotationPresent(Command.class) || !Modifier.isStatic(m.getModifiers()))
+                continue; //If there is no command annotation, skip this method
 
             final Command command = m.getAnnotation(Command.class); //Get command
 

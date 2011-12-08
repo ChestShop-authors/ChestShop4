@@ -34,9 +34,9 @@ public class EventManager {
         PluginManager pm = br.getPlugin().getServer().getPluginManager();
         Listener listener;
 
-        try{
+        try {
             listener = (Listener) clazz.newInstance();
-        } catch (Exception e){
+        } catch (Exception e) {
             br.logger.severe("Failed to register the listener: " + clazz.getName());
             e.printStackTrace();
             return;

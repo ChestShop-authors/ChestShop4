@@ -51,3 +51,5 @@ permissions:
     default: op
   ChestShop.mod:
     description: Allows user only to view other store chests, he can't destroy them or create an Admin Shop
+  ChestShop.name.(some name):
+    description: Gives you the power to do create shops for (some name), for example your town.

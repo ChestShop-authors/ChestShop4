@@ -6,14 +6,14 @@ import com.Acrobot.Breeze.Plugins.BreezePlugin.BreezePlugin;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Acrobot
  */
 public class PluginLoader {
-    public List<BreezePlugin> plugins = new ArrayList<BreezePlugin>();
+    public Set<BreezePlugin> plugins = new HashSet<BreezePlugin>();
     private Breeze breeze;
 
     public PluginLoader(Breeze br) {
@@ -75,7 +75,10 @@ public class PluginLoader {
         }
     }
 
-    public void unregisterModule(){
-        
+    public void disablePlugins() {
+        for (BreezePlugin p : plugins) {
+            p.disable();
+        }
+        plugins = null;
     }
 }

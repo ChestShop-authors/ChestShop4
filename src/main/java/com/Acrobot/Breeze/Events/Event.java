@@ -12,5 +12,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 public @interface Event {
     org.bukkit.event.Event.Type type();
+
     org.bukkit.event.Event.Priority priority() default org.bukkit.event.Event.Priority.Normal;
 }

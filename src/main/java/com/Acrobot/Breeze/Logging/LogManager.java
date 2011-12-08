@@ -1,6 +1,7 @@
 package com.Acrobot.Breeze.Logging;
 
-import java.util.logging.*;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 
 /**
  * @author Acrobot

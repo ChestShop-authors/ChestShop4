@@ -55,12 +55,24 @@ public class Breeze {
     /**
      * Gets the configuration object
      *
-     * @param name Config's name
+     * @param name     Config's name
      * @param defaults Default values
      * @return Configuration
      */
     public Configuration getConfig(String name, Map<String, ConfigObject> defaults) {
         return new Config(plugin.getDataFolder(), name, defaults).getConfiguration();
+    }
+
+    /**
+     * Gets the configuration object from a specified directory
+     *
+     * @param folder   the folder
+     * @param name     config's name
+     * @param defaults Default value
+     * @return Configuration
+     */
+    public Configuration getConfig(File folder, String name, Map<String, ConfigObject> defaults) {
+        return new Config(folder, name, defaults).getConfiguration();
     }
 
     /**
@@ -100,8 +112,8 @@ public class Breeze {
     /**
      * Does everything it can during a reload
      */
-    public void disable(){
-        loader.plugins = null;
+    public void disable() {
+        loader.disablePlugins();
 
         this.plugin = null;
         this.cmdManager = null;

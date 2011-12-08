@@ -34,10 +34,10 @@ public class Config {
      * @param values Values to put in the config
      */
     private void generateDefaults(Map<String, ConfigObject> values) {
-        try{
+        try {
             FileWriter fw = new FileWriter(file, true);
-            
-            for (String o : values.keySet()){
+
+            for (String o : values.keySet()) {
                 if (config.contains(o)) continue;
                 if (file.exists() && file.length() != 0) fw.write('\n');
                 fw.write(o + ": " + retrieveValue(values.get(o)));
@@ -45,15 +45,17 @@ public class Config {
 
             fw.close();
             config.load(file);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     /**
      * Retrieves the value of that ConfigObject
+     *
      * @param o The configObject
      * @return The value
      */
-    private String retrieveValue(ConfigObject o){
+    private String retrieveValue(ConfigObject o) {
         Object value = o.value;
         String comment = o.comment;
         StringBuilder toReturn = new StringBuilder();

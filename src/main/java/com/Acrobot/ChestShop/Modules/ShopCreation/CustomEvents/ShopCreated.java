@@ -1,24 +1,23 @@
 package com.Acrobot.ChestShop.Modules.ShopCreation.CustomEvents;
 
 import com.Acrobot.Breeze.Events.CustomEvents.CancellableEvent;
-import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 /**
  * @author Acrobot
  */
-public class SignCreated extends CancellableEvent {
-    private Sign sign;
+public class ShopCreated extends CancellableEvent {
+    private String[] lines;
     private Player player;
 
-    public SignCreated(Sign sign, Player player) {
-        super("SignCreated");
-        this.sign = sign;
+    public ShopCreated(String[] lines, Player player) {
+        super("ShopCreated");
+        this.lines = lines;
         this.player = player;
     }
 
-    public Sign getSign() {
-        return sign;
+    public String[] getLines() {
+        return lines;
     }
 
     public Player getPlayer() {

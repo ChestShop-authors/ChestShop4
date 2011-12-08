@@ -12,10 +12,10 @@ import org.bukkit.event.player.PlayerListener;
 /**
  * @author Acrobot
  */
-public class PlayerInteract extends PlayerListener{
+public class PlayerInteract extends PlayerListener {
 
     @Event(type = org.bukkit.event.Event.Type.PLAYER_INTERACT)
-    public void onPlayerInteract(PlayerInteractEvent event){
+    public void onPlayerInteract(PlayerInteractEvent event) {
         Block block = event.getClickedBlock();
         if (block == null || !(block.getState() instanceof Sign)) return;
 

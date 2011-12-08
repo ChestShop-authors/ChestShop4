@@ -11,6 +11,7 @@ public interface CancellableMessage {
 
     /**
      * Sets the cancel message
+     *
      * @param message The message
      */
     public void setCancelMessage(String message);

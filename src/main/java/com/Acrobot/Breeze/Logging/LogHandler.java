@@ -8,11 +8,11 @@ import java.util.logging.Logger;
 /**
  * @author Acrobot
  */
-public class LogHandler extends Handler{
+public class LogHandler extends Handler {
     private static final Logger global = Logger.getLogger("");
     private String prefix;
 
-    public LogHandler(String prefix){
+    public LogHandler(String prefix) {
         this.prefix = prefix;
     }
 

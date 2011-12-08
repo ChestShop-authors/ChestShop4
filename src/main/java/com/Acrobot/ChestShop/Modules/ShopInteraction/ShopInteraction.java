@@ -9,18 +9,21 @@ import org.bukkit.configuration.Configuration;
 /**
  * @author Acrobot
  */
-public class ShopInteraction extends BreezePlugin{
+public class ShopInteraction extends BreezePlugin {
     public static Configuration config;
-    
+    public static Configuration language;
+
     public void onEnable() {
         Breeze br = getBreeze();
-        config = br.getConfig("asd", Config.config);
-        
+        config = br.getConfig("config", Config.config);
+        language = br.getConfig("local");
+
         br.registerEvents(PlayerInteract.class); //When the player touches a sign
         br.registerEvents(ShopInteract.class); //Custom event listener
     }
 
     public void onDisable() {
+        config = null;
     }
 
     public String getName() {

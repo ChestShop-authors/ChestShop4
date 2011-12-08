@@ -34,6 +34,8 @@ public class ChestShop extends JavaPlugin {
 
         breeze = null;
         server = null;
+
+        System.gc(); //Totally shouldn't use that, however, it works.
     }
 
     /**

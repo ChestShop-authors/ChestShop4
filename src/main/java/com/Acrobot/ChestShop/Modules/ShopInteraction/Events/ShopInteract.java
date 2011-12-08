@@ -26,11 +26,14 @@ public class ShopInteract extends CustomEventListener {
         ShopInteractionEvent event = (ShopInteractionEvent) e;
         Player p = event.getPlayer();
 
+        p.sendMessage("It actually works!");
+
         if (!checkTime(p, event)) return; //Check the last time the shop was used
 
         if (!correctSign(event.getLines())) {
+            p.sendMessage("Hey! That's an incorrect sign!"); //TODO Delete this
             event.setCancelled(true);
-            event.setCancelMessage("Asd"); //TODO: Add the stuff from config
+            return;
         }
     }
 
@@ -47,7 +50,7 @@ public class ShopInteract extends CustomEventListener {
     }
 
     private static boolean checkTime(Player p, ShopInteractionEvent e) {
-        if (time.containsKey(p) && (time.get(p) - System.currentTimeMillis()) < 200) {
+        if (time.containsKey(p) && (System.currentTimeMillis() - time.get(p)) < 200) {
             e.setCancelled(true);
             return false;
         }
