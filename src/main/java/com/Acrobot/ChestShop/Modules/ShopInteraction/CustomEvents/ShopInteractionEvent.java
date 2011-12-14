@@ -11,12 +11,14 @@ public class ShopInteractionEvent extends CancellableEvent {
     private String[] lines;
     private Action action;
     private Player player;
+    private boolean buy;
 
-    public ShopInteractionEvent(String[] signText, Action action, Player player) {
+    public ShopInteractionEvent(String[] signText, Action action, Player player, boolean buy) {
         super("ShopInteraction");
         this.lines = signText;
         this.action = action;
         this.player = player;
+        this.buy = buy;
     }
 
     public String[] getLines() {
@@ -29,5 +31,13 @@ public class ShopInteractionEvent extends CancellableEvent {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public boolean isBuy(){
+        return buy;
+    }
+
+    public void setBuy(boolean buy){
+        this.buy = buy;
     }
 }

@@ -37,7 +37,7 @@ public abstract class BreezePlugin implements EnablingPlugin, NamedPlugin {
     /**
      * Returns the Breeze object
      *
-     * @return
+     * @return Breeze
      */
     public Breeze getBreeze() {
         return breeze;

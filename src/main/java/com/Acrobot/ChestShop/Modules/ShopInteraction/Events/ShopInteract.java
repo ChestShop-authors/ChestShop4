@@ -1,9 +1,12 @@
 package com.Acrobot.ChestShop.Modules.ShopInteraction.Events;
 
 import com.Acrobot.Breeze.Events.Event;
+import com.Acrobot.ChestShop.Modules.ShopInteraction.Config;
 import com.Acrobot.ChestShop.Modules.ShopInteraction.CustomEvents.ShopInteractionEvent;
+import com.Acrobot.ChestShop.Modules.ShopInteraction.ShopInteraction;
 import org.bukkit.entity.Player;
 import org.bukkit.event.CustomEventListener;
+import org.bukkit.event.block.Action;
 
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -20,21 +23,22 @@ public class ShopInteract extends CustomEventListener {
             Pattern.compile("[\\w :]+")
     };
 
-    @Event(type = org.bukkit.event.Event.Type.CUSTOM_EVENT, priority = org.bukkit.event.Event.Priority.Lowest)
+    @Event(type = org.bukkit.event.Event.Type.CUSTOM_EVENT, priority = org.bukkit.event.Event.Priority.Low)
     public void onCustomEvent(org.bukkit.event.Event e) {
         if (!(e instanceof ShopInteractionEvent)) return;
         ShopInteractionEvent event = (ShopInteractionEvent) e;
+        if (event.isCancelled()) return;
+
         Player p = event.getPlayer();
 
-        p.sendMessage("It actually works!");
-
         if (!checkTime(p, event)) return; //Check the last time the shop was used
-
-        if (!correctSign(event.getLines())) {
-            p.sendMessage("Hey! That's an incorrect sign!"); //TODO Delete this
+        Action a = event.getAction();
+        if (!correctSign(event.getLines()) || (a != Action.LEFT_CLICK_BLOCK && a != Action.RIGHT_CLICK_BLOCK)){
             event.setCancelled(true);
             return;
         }
+        boolean reverse = ShopInteraction.config.getBoolean(Config.REVERSE_BUTTONS.name());
+        event.setBuy(reverse ? a == Action.LEFT_CLICK_BLOCK : a == Action.RIGHT_CLICK_BLOCK);
     }
 
     /**

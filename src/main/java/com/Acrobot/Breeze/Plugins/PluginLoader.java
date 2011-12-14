@@ -75,6 +75,10 @@ public class PluginLoader {
         }
     }
 
+    /**
+     * Disables the plugins (still able to receive events, etc. though)
+     * (executes the onDisable() method)
+     */
     public void disablePlugins() {
         for (BreezePlugin p : plugins) {
             p.disable();

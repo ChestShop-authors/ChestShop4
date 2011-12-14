@@ -11,6 +11,7 @@ public interface EnablingPlugin {
 
     /**
      * Called when the plugin is disabled
+     * Usually events should be unregistered here (if possible) and static values nullified
      */
     public void onDisable();
 }

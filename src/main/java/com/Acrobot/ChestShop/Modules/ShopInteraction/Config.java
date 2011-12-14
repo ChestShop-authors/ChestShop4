@@ -9,7 +9,8 @@ import java.util.Map;
  * @author Acrobot
  */
 public enum Config {
-    SHOP_INTERACTION_INTERVAL(150, "How often should the player be allowed to buy/sell items? (In 1/1000th of second)");
+    SHOP_INTERACTION_INTERVAL(150, "How often should the player be allowed to buy/sell items? (In 1/1000th of second)"),
+    REVERSE_BUTTONS(false, "If true, people will buy with left-click and sell with right-click.");
 
     private Object value;
     private String comment;
