@@ -6,15 +6,15 @@ import org.bukkit.entity.Player;
 /**
  * @author Acrobot
  */
-public class BuyEvent extends CancellableEvent {
+public class SellEvent extends CancellableEvent {
     private Object object;
     private double price;
     private String owner;
     private Player buyer;
     private Object items;
 
-    public BuyEvent(double price, String owner, Player buyer, Object items, Object cause) {
-        super("BuyEvent");
+    public SellEvent(double price, String owner, Player buyer, Object items, Object cause) {
+        super("SellEvent");
         this.object = cause;
         this.price = price;
         this.owner = owner;
@@ -42,4 +42,3 @@ public class BuyEvent extends CancellableEvent {
         return items;
     }
 }
-

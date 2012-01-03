@@ -4,7 +4,6 @@ import com.Acrobot.Breeze.Events.Event;
 import com.Acrobot.ChestShop.Modules.Permission;
 import com.Acrobot.ChestShop.Modules.ShopCreation.Language;
 import com.Acrobot.ChestShop.Modules.ShopCreation.ShopCreation;
-import com.Acrobot.ChestShop.Utils.NumberUtil;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockListener;
@@ -17,14 +16,14 @@ import java.util.regex.Pattern;
  * @author Acrobot
  */
 public class SignPlaced extends BlockListener {
-    private static final Pattern[] goodPattern = {
+    private static final Pattern[] GoodPattern = {
             Pattern.compile("^\\\\w.+$"),
             Pattern.compile("[0-9]+"),
             Pattern.compile(".*B.*|.*S.*"),
             Pattern.compile("[\\w :]+")
     };
 
-    private static final Pattern[] almostGoodPattern = {
+    private static final Pattern[] AlmostGoodPattern = {
             Pattern.compile("^$|^\\\\w.+$"),
             Pattern.compile("[0-9]+"),
             Pattern.compile(".*"),
@@ -57,7 +56,7 @@ public class SignPlaced extends BlockListener {
         String[] split = s.split(":");
         String first = split[0];
 
-        if (NumberUtil.isInteger(s)); //TODO Finish this
+        return s;//if (NumberUtil.isInteger(s)); //TODO Finish this
     }
 
     /**
@@ -86,11 +85,11 @@ public class SignPlaced extends BlockListener {
     }
 
     private static boolean isCorrectSign(String[] lines) {
-        return isCorrect(lines, goodPattern);
+        return isCorrect(lines, GoodPattern);
     }
 
     private static boolean isCorrectPreparedSign(String[] lines) {
-        return isCorrect(lines, almostGoodPattern);
+        return isCorrect(lines, AlmostGoodPattern);
     }
 
     private static boolean isSign(Block b) {

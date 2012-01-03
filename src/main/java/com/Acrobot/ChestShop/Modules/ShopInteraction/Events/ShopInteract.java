@@ -9,14 +9,15 @@ import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.block.Action;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
  * @author Acrobot
  */
 public class ShopInteract extends CustomEventListener {
-    private static HashMap<Player, Long> time = new HashMap<Player, Long>();
-    private static final Pattern[] patterns = {
+    private static Map<Player, Long> time = new HashMap<Player, Long>();
+    private static final Pattern[] Patterns = {
             Pattern.compile("^$|^\\\\w.+$"),
             Pattern.compile("[0-9]+"),
             Pattern.compile(".*B.*|.*S.*"),
@@ -49,7 +50,7 @@ public class ShopInteract extends CustomEventListener {
      */
     private static boolean correctSign(String[] lines) {
         boolean right = true;
-        for (int i = 0; i < 4 && right; i++) right = patterns[i].matcher(lines[i]).matches();
+        for (int i = 0; i < 4 && right; i++) right = Patterns[i].matcher(lines[i]).matches();
         return right;
     }
 

@@ -7,6 +7,7 @@ import com.Acrobot.Breeze.Plugins.BreezePlugin.BreezePlugin;
  */
 public class Transaction extends BreezePlugin{
     public void onEnable() {
+
     }
 
     public void onDisable() {

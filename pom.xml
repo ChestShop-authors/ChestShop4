@@ -19,19 +19,19 @@
     <repositories>
         <repository>
             <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/artifactory/repo</url>
-        </repository>
-        <repository>
-            <id>somethingodd</id>
-            <url>http://repo.somethingodd.info</url>
+            <url>http://repo.bukkit.org/content/groups/repo/</url>
         </repository>
         <repository>
             <id>craftfire-repo</id>
-            <url>http://db.craftfire.com/repo</url>
+            <url>http://nexus.getspout.org/content/repositories/third-party-releases/</url>
         </repository>
         <repository>
-            <id>blockface-repo</id>
-            <url>http://repo.blockface.org/repository</url>
+            <id>somethingodd-repo</id>
+            <url>http://repo.somethingodd.info/</url>
+        </repository>
+        <repository>
+            <id>nexisonline</id>
+            <url>http://repo.nexisonline.net:8080/nexus/content/groups/public/</url>
         </repository>
     </repositories>
 
@@ -39,14 +39,14 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.1-R2-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.1-R2-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -57,8 +57,8 @@
         </dependency>
         <dependency>
             <groupId>com.griefcraft</groupId>
-            <artifactId>lwc</artifactId>
-            <version>3.30</version>
+            <artifactId>LWC</artifactId>
+            <version>3.53</version>
         </dependency>
         <dependency>
             <groupId>org.yi.acru.bukkit</groupId>
@@ -67,23 +67,23 @@
         </dependency>
         <dependency>
             <groupId>com.nijikokun.bukkit</groupId>
-            <artifactId>permissions</artifactId>
+            <artifactId>Permissions</artifactId>
             <version>3.1.6</version>
         </dependency>
         <dependency>
-            <groupId>com.nijiko</groupId>
-            <artifactId>iCo4</artifactId>
-            <version>1.0</version>
+            <groupId>com.nijiko.coelho</groupId>
+            <artifactId>iConomy</artifactId>
+            <version>4.65</version>
         </dependency>
         <dependency>
-            <groupId>com.nijiko</groupId>
-            <artifactId>iCo5</artifactId>
-            <version>1.0</version>
+            <groupId>com</groupId>
+            <artifactId>iConomy</artifactId>
+            <version>5.0</version>
         </dependency>
         <dependency>
-            <groupId>com.nijiko</groupId>
+            <groupId>com</groupId>
             <artifactId>iCo6</artifactId>
-            <version>1.0</version>
+            <version>6.0.8b</version>
         </dependency>
         <dependency>
             <groupId>com.palmergames</groupId>
@@ -92,25 +92,23 @@
         </dependency>
         <dependency>
             <groupId>com.earth2me</groupId>
-            <artifactId>Essentials</artifactId>
-            <version>1.0</version>
+            <artifactId>essentials</artifactId>
+            <version>2.7.2</version>
         </dependency>
         <dependency>
-            <groupId>cosine.boseconomy</groupId>
-            <artifactId>BOSEconomy7</artifactId>
-            <version>1.0</version>
+            <groupId>cosine</groupId>
+            <artifactId>boseconomy</artifactId>
+            <version>0.7.3</version>
         </dependency>
         <dependency>
             <groupId>me.ashtheking</groupId>
-            <artifactId>MultiCurrency</artifactId>
-            <version>1.0</version>
+            <artifactId>currency</artifactId>
+            <version>0.1</version>
         </dependency>
         <dependency>
-            <groupId>com.economy</groupId>
-            <artifactId>3co</artifactId>
-            <version>2</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/3co.jar</systemPath>
+            <groupId>me.ic3d</groupId>
+            <artifactId>eco</artifactId>
+            <version>2.0</version>
         </dependency>
     </dependencies>
 

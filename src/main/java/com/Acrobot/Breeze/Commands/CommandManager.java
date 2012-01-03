@@ -64,7 +64,7 @@ public class CommandManager {
                         return (Boolean) m.invoke(null, commandSender, currentAlias, args);
                     } catch (Exception e) {
                         br.logger.severe("Error occurred while executing command " + command.command());
-                        System.out.println(e.getMessage());
+                        e.printStackTrace();
                         return false;
                     }
                 }
