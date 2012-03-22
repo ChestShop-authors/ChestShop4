@@ -58,7 +58,7 @@ public class ChestShop extends JavaPlugin {
     }
 
     /**
-     * @return The bukkit's server
+     * @return The main server
      */
     public static Server getBukkitServer() {
         return server;
@@ -68,7 +68,7 @@ public class ChestShop extends JavaPlugin {
      * Calls an event
      *
      * @param e Event to call
-     * @return If the event is cancelled
+     * @return If the event is result
      */
     public static boolean callEvent(Event e) {
         server.getPluginManager().callEvent(e);

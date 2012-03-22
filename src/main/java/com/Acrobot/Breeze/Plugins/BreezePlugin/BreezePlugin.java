@@ -1,7 +1,6 @@
 package com.Acrobot.Breeze.Plugins.BreezePlugin;
 
 import com.Acrobot.Breeze.Breeze;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
@@ -10,7 +9,6 @@ import java.io.File;
  */
 public abstract class BreezePlugin implements EnablingPlugin, NamedPlugin {
     private File dataFolder;
-    private JavaPlugin plugin;
     private Breeze breeze;
 
     public BreezePlugin() {
@@ -23,15 +21,6 @@ public abstract class BreezePlugin implements EnablingPlugin, NamedPlugin {
      */
     public File getDataFolder() {
         return dataFolder;
-    }
-
-    /**
-     * Returns the main plugin class
-     *
-     * @return plugin class
-     */
-    public JavaPlugin getPlugin() {
-        return plugin;
     }
 
     /**
@@ -52,7 +41,6 @@ public abstract class BreezePlugin implements EnablingPlugin, NamedPlugin {
      */
     public final void initialize(File dataFolder, Breeze breeze) {
         this.dataFolder = dataFolder;
-        this.plugin = breeze.getPlugin();
         this.breeze = breeze;
 
         onEnable();

@@ -1,6 +1,6 @@
 package com.Acrobot.ChestShop.Modules.ShopInteraction.CustomEvents;
 
-import com.Acrobot.Breeze.Events.CustomEvents.CancellableEvent;
+import com.Acrobot.Breeze.Events.Cancelables.CancellableEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 

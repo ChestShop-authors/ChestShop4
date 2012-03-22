@@ -1,18 +1,19 @@
 package com.Acrobot.Breeze.Events;
 
 import com.Acrobot.Breeze.Breeze;
+import org.bukkit.Bukkit;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.PluginManager;
 
-import java.lang.reflect.Method;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Acrobot
  */
 public class EventManager {
     private Breeze br;
+    private Set<Listener> listeners = new HashSet<Listener>();
 
     public EventManager(Breeze breeze) {
         this.br = breeze;
@@ -21,27 +22,23 @@ public class EventManager {
     /**
      * Registers events in the most efficient way
      *
-     * @param clazz The listener class
+     * @param listener The listener class
      */
-    public void registerEvents(Class clazz) {
-        List<Event> events = new LinkedList<Event>();
+    public void registerEvents(Listener listener) {
+        listeners.add(listener);
+        Bukkit.getServer().getPluginManager().registerEvents(listener, br.getPlugin());
+    }
 
-        for (Method m : clazz.getMethods()) {
-            if (!m.isAnnotationPresent(Event.class)) continue;
-            events.add(m.getAnnotation(Event.class));
+    /**
+     * Unregisters all events
+     */
+    public void unregisterEvents() {
+        for (Listener listener : listeners) {
+            unregisterEvent(listener);
         }
+    }
 
-        PluginManager pm = br.getPlugin().getServer().getPluginManager();
-        Listener listener;
-
-        try {
-            listener = (Listener) clazz.newInstance();
-        } catch (Exception e) {
-            br.logger.severe("Failed to register the listener: " + clazz.getName());
-            e.printStackTrace();
-            return;
-        }
-
-        for (Event event : events) pm.registerEvent(event.type(), listener, event.priority(), br.getPlugin());
+    public void unregisterEvent(Listener listener) {
+        HandlerList.unregisterAll(listener);
     }
 }

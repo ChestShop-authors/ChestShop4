@@ -1,6 +1,8 @@
 package com.Acrobot.ChestShop.Modules.ShopCreation.Events;
 
 import com.Acrobot.Breeze.Events.Event;
+import com.Acrobot.Breeze.Utils.NumberUtil;
+import com.Acrobot.Breeze.Utils.StringUtil;
 import com.Acrobot.ChestShop.Modules.Permission;
 import com.Acrobot.ChestShop.Modules.ShopCreation.Language;
 import com.Acrobot.ChestShop.Modules.ShopCreation.ShopCreation;
@@ -52,11 +54,20 @@ public class SignPlaced extends BlockListener {
     }
 
     private String formatFourthLine(String s) {
-        s = s.replace("_", " ");
-        String[] split = s.split(":");
-        String first = split[0];
+        int index = (s.indexOf(':') != -1 ? s.indexOf(':') : 9999);
+        if (s.indexOf('-') < index && s.indexOf('-') != -1) index = s.indexOf('-');
 
-        return s;//if (NumberUtil.isInteger(s)); //TODO Finish this
+        StringBuilder toReturn = new StringBuilder(3);
+        String matName = s.split(":|-")[0];
+        matName = matName.trim();
+        if (NumberUtil.isInteger(matName)) matName = Items.getName(is, false);
+        int iPos = 15 - (s.length() - index);
+        if (index != 9999 && matName.length() > iPos) matName = matName.substring(0, iPos);
+        if (Items.getItemStack(matName).getType() == is.getType()) toReturn.append(matName);
+        else toReturn.append(is.getTypeId());
+
+        if (index != -1 && index != 9999) toReturn.append(s.substring(index));
+        return StringUtil.capitalizeFirst(toReturn.toString(), ' ');
     }
 
     /**

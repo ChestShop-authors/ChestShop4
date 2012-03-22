@@ -4,6 +4,7 @@ import com.Acrobot.Breeze.Breeze;
 import com.Acrobot.Breeze.Plugins.BreezePlugin.BreezePlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashSet;
@@ -59,7 +60,7 @@ public class PluginLoader {
         try {
             URLClassLoader loader = new URLClassLoader(new URL[]{plugin.toURI().toURL()});
             return (BreezePlugin) loader.getResource("Main.class").getContent();
-        } catch (Exception ex) {
+        } catch (IOException exception) {
             breeze.logger.severe("Couldn't load Breeze plugin: " + plugin.getName());
             return null;
         }

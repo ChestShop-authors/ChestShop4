@@ -4,10 +4,10 @@ import com.Acrobot.Breeze.Commands.CommandManager;
 import com.Acrobot.Breeze.Config.Config;
 import com.Acrobot.Breeze.Config.ConfigObject;
 import com.Acrobot.Breeze.Events.EventManager;
-import com.Acrobot.Breeze.Logging.LogManager;
 import com.Acrobot.Breeze.Plugins.BreezePlugin.BreezePlugin;
 import com.Acrobot.Breeze.Plugins.PluginLoader;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -28,7 +28,7 @@ public class Breeze {
     public Breeze(JavaPlugin plugin) {
         this.plugin = plugin;
 
-        logger = LogManager.init(Logger.getLogger(plugin.getDescription().getName()));
+        logger = plugin.getLogger();
 
         loader = new PluginLoader(this);
         cmdManager = new CommandManager(this);
@@ -87,10 +87,19 @@ public class Breeze {
     /**
      * Registers the event class
      *
-     * @param clazz The class
+     * @param listener the listener
      */
-    public void registerEvents(Class clazz) {
-        eventManager.registerEvents(clazz);
+    public void registerEvents(Listener listener) {
+        eventManager.registerEvents(listener);
+    }
+
+    /**
+     * Unregisters the event class
+     *
+     * @param listener the listener
+     */
+    public void unregisterEvents(Listener listener) {
+        eventManager.unregisterEvent(listener);
     }
 
     /**

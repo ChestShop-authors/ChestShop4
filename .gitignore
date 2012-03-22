@@ -3,9 +3,6 @@
 /.project
 /.settings
 
-# netbeans
-/nbproject
-
 # we use maven!
 /build.xml
 

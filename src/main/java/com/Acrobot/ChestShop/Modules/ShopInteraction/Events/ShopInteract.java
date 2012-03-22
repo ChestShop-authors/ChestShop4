@@ -35,7 +35,7 @@ public class ShopInteract extends CustomEventListener {
         if (!checkTime(p, event)) return; //Check the last time the shop was used
         Action a = event.getAction();
         if (!correctSign(event.getLines()) || (a != Action.LEFT_CLICK_BLOCK && a != Action.RIGHT_CLICK_BLOCK)){
-            event.setCancelled(true);
+            event.setResult(true);
             return;
         }
         boolean reverse = ShopInteraction.config.getBoolean(Config.REVERSE_BUTTONS.name());
@@ -56,7 +56,7 @@ public class ShopInteract extends CustomEventListener {
 
     private static boolean checkTime(Player p, ShopInteractionEvent e) {
         if (time.containsKey(p) && (System.currentTimeMillis() - time.get(p)) < 200) {
-            e.setCancelled(true);
+            e.setResult(true);
             return false;
         }
         time.put(p, System.currentTimeMillis());
