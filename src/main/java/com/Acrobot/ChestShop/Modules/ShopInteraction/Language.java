@@ -1,6 +1,6 @@
 package com.Acrobot.ChestShop.Modules.ShopInteraction;
 
-import com.Acrobot.Breeze.Config.ConfigObject;
+import com.Acrobot.Breeze.Config.ConfigValue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ public enum Language {
     prefix("&a[Shop] &f");
     public Object value;
 
-    public static Map<String, ConfigObject> language = new HashMap<String, ConfigObject>();
+    public static Map<String, ConfigValue> language = new HashMap<String, ConfigValue>();
 
     Language(Object value) {
         this.value = value;
@@ -20,7 +20,7 @@ public enum Language {
 
     static {
         for (Language c : Language.values()) {
-            ConfigObject obj = new ConfigObject(c.value);
+            ConfigValue obj = new ConfigValue(c.value);
             language.put(c.name(), obj);
         }
     }

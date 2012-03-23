@@ -1,6 +1,5 @@
-package com.Acrobot.Breeze.Plugins;
+package com.Acrobot.Breeze.Plugins.Loader;
 
-import com.Acrobot.Breeze.Breeze;
 import com.Acrobot.Breeze.Plugins.BreezePlugin.BreezePlugin;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -29,22 +28,25 @@ public class JavaPluginLoader {
     protected ClassLoader parent;
     protected Class parentClass;
 
-    protected File folder;
-
-    protected Set<BreezePlugin> plugins = new HashSet<BreezePlugin>();
-    protected Set<File> files = new HashSet<File>();
-
-    public JavaPluginLoader(File pluginFolder, Class parent) {
-        this.folder = pluginFolder;
+    public JavaPluginLoader(Class parent) {
         this.parent = parent.getClassLoader();
         this.parentClass = parent;
     }
 
     /**
      * Loads all plugins
+     *
+     * @param folder Folder to load the plugins from
+     * @return Plugins loaded
      */
-    public void load() {
+    public Set<BreezePlugin> load(File folder) {
         List<URL> urls = new ArrayList<URL>();
+        Set<BreezePlugin> plugins = new HashSet<BreezePlugin>();
+        Set<File> files = new HashSet<File>();
+
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
 
         for (File file : folder.listFiles(new JarFilter())) {
             if (!isCorrectPlugin(file)) {
@@ -68,17 +70,8 @@ public class JavaPluginLoader {
                 e.printStackTrace();
             }
         }
-    }
 
-    /**
-     * Turns on all the plugins
-     *
-     * @param br Breeze's instance to initialize the plugins with
-     */
-    public void initializePlugins(Breeze br) {
-        for (BreezePlugin plugin : plugins) {
-            plugin.initialize(plugin.getDataFolder(), plugin.getBreeze());
-        }
+        return plugins;
     }
 
     /**
@@ -91,9 +84,6 @@ public class JavaPluginLoader {
      */
     private BreezePlugin loadPlugin(File file) throws InvalidDescriptionException {
         try {
-            JarFile jar = new JarFile(file);
-            JarEntry entry = jar.getJarEntry("plugin.info");
-
             String mainClass = getMainClass(file);
 
             Class<?> clazz = Class.forName(mainClass, true, loader);

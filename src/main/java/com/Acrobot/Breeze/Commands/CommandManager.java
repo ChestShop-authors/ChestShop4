@@ -6,16 +6,20 @@ import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.craftbukkit.CraftServer;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Acrobot
  */
 public class CommandManager {
     private SimpleCommandMap scm;
-    private Breeze br;
+    private final Set<org.bukkit.command.Command> commands = new HashSet<org.bukkit.command.Command>();
+    private final Breeze br;
 
     public CommandManager(Breeze br) {
         this.br = br;
@@ -62,16 +66,43 @@ public class CommandManager {
                 public boolean execute(CommandSender commandSender, String currentAlias, String[] args) {
                     try {
                         return (Boolean) m.invoke(null, commandSender, currentAlias, args);
-                    } catch (Exception e) {
-                        br.logger.severe("Error occurred while executing command " + command.command());
+                    } catch (InvocationTargetException e) {
                         e.printStackTrace();
-                        return false;
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
                     }
+
+                    return false;
                 }
 
             };
 
-            if (!registerCommand(cmd)) br.logger.severe("Couldn't register command: " + command.command());
+            if (!registerCommand(cmd)) {
+                br.logger.severe("Couldn't register command: " + command.command());
+            } else {
+                commands.add(cmd);
+            }
+        }
+    }
+
+    /**
+     * Unregisters a command
+     * @param command command to unregister
+     */
+    public void unregisterCommand(String command) {
+        for (org.bukkit.command.Command cmd : scm.getCommands()) {
+            if (cmd.getName().equals(command)) {
+                cmd.unregister(scm);
+            }
+        }
+    }
+
+    /**
+     * Unregisters all commands from BreezePlugins
+     */
+    public void unregisterCommands() {
+        for (org.bukkit.command.Command command : commands) {
+            unregisterCommand(command.getName());
         }
     }
 }

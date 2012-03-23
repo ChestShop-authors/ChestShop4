@@ -1,6 +1,6 @@
 package com.Acrobot.ChestShop.Modules.ShopInteraction;
 
-import com.Acrobot.Breeze.Config.ConfigObject;
+import com.Acrobot.Breeze.Config.ConfigValue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ public enum Config {
     private Object value;
     private String comment;
 
-    public static Map<String, ConfigObject> config = new HashMap<String, ConfigObject>();
+    public static Map<String, ConfigValue> config = new HashMap<String, ConfigValue>();
 
     Config(Object value, String text) {
         this.value = value;
@@ -28,7 +28,7 @@ public enum Config {
 
     static {
         for (Config c : Config.values()) {
-            ConfigObject obj = (c.comment == null ? new ConfigObject(c.value) : new ConfigObject(c.value, c.comment));
+            ConfigValue obj = (c.comment == null ? new ConfigValue(c.value) : new ConfigValue(c.value, c.comment));
             config.put(c.name(), obj);
         }
     }

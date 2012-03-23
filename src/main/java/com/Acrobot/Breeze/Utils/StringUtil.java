@@ -6,7 +6,8 @@ package com.Acrobot.Breeze.Utils;
 public class StringUtil {
     /**
      * Capitalizes every first letter of a word
-     * @param string String to reformat
+     *
+     * @param string    String to reformat
      * @param separator Word separator
      * @return Reformatted string
      */
@@ -16,18 +17,21 @@ public class StringUtil {
         String[] split = string.split(Character.toString(separator));
         StringBuilder total = new StringBuilder(3);
 
-        for (String s : split) total.append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).append(' ');
+        for (String s : split) {
+            total.append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).append(' ');
+        }
 
         return total.toString().trim();
     }
 
     /**
      * Capitalizes every first letter of a word
+     *
      * @param string String to reformat
-     * @see StringUtil#capitalizeFirstLetter(String, char)
      * @return Reformatted string
+     * @see StringUtil#capitalizeFirstLetter(String, char)
      */
-    public static String capitalizeFirstLetter(String string){
+    public static String capitalizeFirstLetter(String string) {
         return capitalizeFirstLetter(string, ' ');
     }
 }

@@ -1,13 +1,13 @@
 package com.Acrobot.Breeze;
 
 import com.Acrobot.Breeze.Commands.CommandManager;
-import com.Acrobot.Breeze.Config.Config;
-import com.Acrobot.Breeze.Config.ConfigObject;
+import com.Acrobot.Breeze.Config.ConfigValue;
 import com.Acrobot.Breeze.Events.EventManager;
 import com.Acrobot.Breeze.Plugins.BreezePlugin.BreezePlugin;
-import com.Acrobot.Breeze.Plugins.PluginLoader;
+import com.Acrobot.Breeze.Plugins.PluginManager;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -19,18 +19,19 @@ import java.util.logging.Logger;
  * @author Acrobot
  */
 public class Breeze {
-    private JavaPlugin plugin;
+    private Plugin plugin;
     public Logger logger;
-    public PluginLoader loader;
-    public CommandManager cmdManager;
-    public EventManager eventManager;
+
+    private PluginManager manager;
+    private CommandManager cmdManager;
+    private EventManager eventManager;
 
     public Breeze(JavaPlugin plugin) {
         this.plugin = plugin;
 
         logger = plugin.getLogger();
 
-        loader = new PluginLoader(this);
+        manager = new PluginManager(this);
         cmdManager = new CommandManager(this);
         eventManager = new EventManager(this);
     }
@@ -42,13 +43,13 @@ public class Breeze {
      * @return Configuration
      */
     public Configuration getConfig(String name) {
-        return getConfig(name, new HashMap<String, ConfigObject>());
+        return getConfig(name, new HashMap<String, ConfigValue>());
     }
 
     /**
      * @return The bukkit plugin
      */
-    public JavaPlugin getPlugin() {
+    public Plugin getPlugin() {
         return plugin;
     }
 
@@ -59,7 +60,7 @@ public class Breeze {
      * @param defaults Default values
      * @return Configuration
      */
-    public Configuration getConfig(String name, Map<String, ConfigObject> defaults) {
+    public Configuration getConfig(String name, Map<String, ConfigValue> defaults) {
         return new Config(plugin.getDataFolder(), name, defaults).getConfiguration();
     }
 
@@ -71,7 +72,7 @@ public class Breeze {
      * @param defaults Default value
      * @return Configuration
      */
-    public Configuration getConfig(File folder, String name, Map<String, ConfigObject> defaults) {
+    public Configuration getConfig(File folder, String name, Map<String, ConfigValue> defaults) {
         return new Config(folder, name, defaults).getConfiguration();
     }
 
@@ -108,26 +109,35 @@ public class Breeze {
      * @param plugin The Breeze plugin to register
      */
     public void registerModule(BreezePlugin plugin) {
-        loader.plugins.add(plugin);
+        manager.initializePlugin(plugin);
     }
 
     /**
      * Loads all plugins
      */
     public void loadPlugins() {
-        loader.loadPlugins(new File(plugin.getDataFolder() + File.separator + "plugins"));
+        manager.initializePlugins();
+    }
+
+    /**
+     * @return The Breeze plugins folder
+     */
+    public File getPluginFolder() {
+        return new File(plugin.getDataFolder(), "plugins");
     }
 
     /**
      * Does everything it can during a reload
      */
     public void disable() {
-        loader.disablePlugins();
+        manager.disablePlugins();
 
         this.plugin = null;
         this.cmdManager = null;
         this.eventManager = null;
         this.logger = null;
-        this.loader = null;
+        this.manager = null;
+        
+        System.gc();
     }
 }

@@ -3,25 +3,19 @@ package com.Acrobot.ChestShop;
 import com.Acrobot.Breeze.Breeze;
 import com.Acrobot.ChestShop.Modules.ShopCreation.ShopCreation;
 import com.Acrobot.ChestShop.Modules.ShopInteraction.ShopInteraction;
-import org.bukkit.Server;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * @author Acrobot
  */
 public class ChestShop extends JavaPlugin {
-
     private static Breeze breeze;
-    private static Server server;
 
     /**
      * Called on plugin enable
      */
     public void onEnable() {
         breeze = new Breeze(this);
-        server = getServer();
 
         registerDefaultModules();
     }
@@ -33,9 +27,6 @@ public class ChestShop extends JavaPlugin {
         breeze.disable();
 
         breeze = null;
-        server = null;
-
-        System.gc(); //Totally shouldn't use that, however, it works.
     }
 
     /**
@@ -55,24 +46,5 @@ public class ChestShop extends JavaPlugin {
         breeze.registerModule(new ShopInteraction());
 
         breeze.loadPlugins();
-    }
-
-    /**
-     * @return The main server
-     */
-    public static Server getBukkitServer() {
-        return server;
-    }
-
-    /**
-     * Calls an event
-     *
-     * @param e Event to call
-     * @return If the event is result
-     */
-    public static boolean callEvent(Event e) {
-        server.getPluginManager().callEvent(e);
-
-        return e instanceof Cancellable && ((Cancellable) e).isCancelled();
     }
 }
