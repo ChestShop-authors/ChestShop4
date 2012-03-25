@@ -1,6 +1,7 @@
 package com.Acrobot.Breeze.Commands;
 
 import com.Acrobot.Breeze.Breeze;
+import com.Acrobot.Breeze.Plugins.BreezePlugin.BreezePlugin;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.craftbukkit.CraftServer;
@@ -9,16 +10,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Acrobot
  */
 public class CommandManager {
     private SimpleCommandMap scm;
-    private final Set<org.bukkit.command.Command> commands = new HashSet<org.bukkit.command.Command>();
+    private final Map<BreezePlugin, List<org.bukkit.command.Command>> commands = new HashMap<BreezePlugin, List<org.bukkit.command.Command>>();
     private final Breeze br;
 
     public CommandManager(Breeze br) {
@@ -49,7 +48,7 @@ public class CommandManager {
      *
      * @param clazz the command class
      */
-    public void registerCommand(Class clazz) {
+    public void registerCommand(Class clazz, BreezePlugin plugin) {
         for (final Method m : clazz.getMethods()) {
             if (!m.isAnnotationPresent(Command.class) || !Modifier.isStatic(m.getModifiers()))
                 continue; //If there is no command annotation, skip this method
@@ -80,13 +79,20 @@ public class CommandManager {
             if (!registerCommand(cmd)) {
                 br.logger.severe("Couldn't register command: " + command.command());
             } else {
-                commands.add(cmd);
+                if (commands.containsKey(plugin)) {
+                    commands.get(plugin).add(cmd);
+                } else {
+                    List<org.bukkit.command.Command> list = new ArrayList<org.bukkit.command.Command>();
+                    list.add(cmd);
+                    commands.put(plugin, list);
+                }
             }
         }
     }
 
     /**
      * Unregisters a command
+     *
      * @param command command to unregister
      */
     public void unregisterCommand(String command) {
@@ -101,8 +107,23 @@ public class CommandManager {
      * Unregisters all commands from BreezePlugins
      */
     public void unregisterCommands() {
-        for (org.bukkit.command.Command command : commands) {
-            unregisterCommand(command.getName());
+        for (List<org.bukkit.command.Command> list : commands.values()) {
+            for (org.bukkit.command.Command command : list) {
+                unregisterCommand(command.getName());
+            }
+        }
+    }
+
+    /**
+     * Unregisters all commands from one plugin
+     *
+     * @param plugin plugin that registered the commands
+     */
+    public void unregisterCommands(BreezePlugin plugin) {
+        if (commands.containsKey(plugin)) {
+            for (org.bukkit.command.Command cmd : commands.get(plugin)) {
+                unregisterCommand(cmd.getName());
+            }
         }
     }
 }

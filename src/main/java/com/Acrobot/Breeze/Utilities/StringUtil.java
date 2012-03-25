@@ -1,9 +1,10 @@
-package com.Acrobot.Breeze.Utils;
+package com.Acrobot.Breeze.Utilities;
 
 /**
  * @author Acrobot
  */
 public class StringUtil {
+
     /**
      * Capitalizes every first letter of a word
      *

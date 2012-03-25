@@ -1,4 +1,4 @@
-package com.Acrobot.Breeze.Utils;
+package com.Acrobot.Breeze.Utilities;
 
 /**
  * @author Acrobot
@@ -8,7 +8,7 @@ public class NumberUtil {
         try {
             Integer.parseInt(string);
             return true;
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             return false;
         }
     }
@@ -17,7 +17,7 @@ public class NumberUtil {
         try {
             Float.parseFloat(string);
             return true;
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             return false;
         }
     }
@@ -26,7 +26,7 @@ public class NumberUtil {
         try {
             Double.parseDouble(string);
             return true;
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             return false;
         }
     }

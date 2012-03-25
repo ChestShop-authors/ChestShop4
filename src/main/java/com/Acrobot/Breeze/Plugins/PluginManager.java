@@ -43,7 +43,23 @@ public class PluginManager {
      * @param plugin Plugin to initialize
      */
     public void initializePlugin(BreezePlugin plugin) {
+        plugins.add(plugin);
         plugin.initialize(new File(breeze.getPluginFolder(), plugin.getName()), breeze);
+    }
+
+    /**
+     * Returns a BreezePlugin named like the parameter
+     *
+     * @param name plugin to find
+     * @return BreezePlugin found
+     */
+    public BreezePlugin getPlugin(String name) {
+        for (BreezePlugin plugin : plugins) {
+            if (plugin.getName().equals(name)) {
+                return plugin;
+            }
+        }
+        return null;
     }
 
     /**
@@ -62,6 +78,9 @@ public class PluginManager {
      */
     public void disablePlugin(BreezePlugin plugin) {
         plugin.disable();
+
+        breeze.eventManager.unregisterEvents(plugin);
+        breeze.cmdManager.unregisterCommands(plugin);
     }
 
 

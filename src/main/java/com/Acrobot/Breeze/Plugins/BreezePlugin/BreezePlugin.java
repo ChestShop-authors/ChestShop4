@@ -3,6 +3,7 @@ package com.Acrobot.Breeze.Plugins.BreezePlugin;
 import com.Acrobot.Breeze.Breeze;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 /**
  * @author Acrobot
@@ -33,6 +34,15 @@ public abstract class BreezePlugin implements EnablingPlugin, NamedPlugin {
     }
 
     /**
+     * Returns a plugin logger
+     *
+     * @return Logger for this plugin
+     */
+    public Logger getLogger() {
+        return breeze.logger;
+    }
+
+    /**
      * Initializes the plugin
      * Shouldn't be called manually.
      *
@@ -46,6 +56,9 @@ public abstract class BreezePlugin implements EnablingPlugin, NamedPlugin {
         onEnable();
     }
 
+    /**
+     * Executed when Breeze is being disabled
+     */
     public final void disable() {
         onDisable();
     }

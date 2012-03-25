@@ -1,6 +1,7 @@
 package com.Acrobot.Breeze;
 
 import com.Acrobot.Breeze.Commands.CommandManager;
+import com.Acrobot.Breeze.Config.BreezeConfiguration;
 import com.Acrobot.Breeze.Config.ConfigValue;
 import com.Acrobot.Breeze.Events.EventManager;
 import com.Acrobot.Breeze.Plugins.BreezePlugin.BreezePlugin;
@@ -23,8 +24,8 @@ public class Breeze {
     public Logger logger;
 
     private PluginManager manager;
-    private CommandManager cmdManager;
-    private EventManager eventManager;
+    public CommandManager cmdManager;
+    public EventManager eventManager;
 
     public Breeze(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -60,8 +61,8 @@ public class Breeze {
      * @param defaults Default values
      * @return Configuration
      */
-    public Configuration getConfig(String name, Map<String, ConfigValue> defaults) {
-        return new Config(plugin.getDataFolder(), name, defaults).getConfiguration();
+    public BreezeConfiguration getConfig(String name, Map<String, ConfigValue> defaults) {
+        return getConfig(getPluginFolder(), name, defaults);
     }
 
     /**
@@ -72,8 +73,11 @@ public class Breeze {
      * @param defaults Default value
      * @return Configuration
      */
-    public Configuration getConfig(File folder, String name, Map<String, ConfigValue> defaults) {
-        return new Config(folder, name, defaults).getConfiguration();
+    public BreezeConfiguration getConfig(File folder, String name, Map<String, ConfigValue> defaults) {
+        BreezeConfiguration config = BreezeConfiguration.loadConfiguration(folder);
+
+        config.addDefaultValues(defaults);
+        return config;
     }
 
     /**
@@ -81,17 +85,18 @@ public class Breeze {
      *
      * @param clazz The class
      */
-    public void registerCommands(Class clazz) {
-        cmdManager.registerCommand(clazz);
+    public void registerCommands(BreezePlugin plugin, Class clazz) {
+        cmdManager.registerCommand(clazz, plugin);
     }
 
     /**
      * Registers the event class
      *
+     * @param plugin   Plugin to register the events for
      * @param listener the listener
      */
-    public void registerEvents(Listener listener) {
-        eventManager.registerEvents(listener);
+    public void registerEvents(BreezePlugin plugin, Listener listener) {
+        eventManager.registerEvents(plugin, listener);
     }
 
     /**
@@ -100,7 +105,7 @@ public class Breeze {
      * @param listener the listener
      */
     public void unregisterEvents(Listener listener) {
-        eventManager.unregisterEvent(listener);
+        eventManager.unregisterEvents(listener);
     }
 
     /**
@@ -110,6 +115,29 @@ public class Breeze {
      */
     public void registerModule(BreezePlugin plugin) {
         manager.initializePlugin(plugin);
+    }
+
+    /**
+     * Unregisters a module
+     *
+     * @param plugin Plugin to unregister
+     */
+    public void unregisterModule(BreezePlugin plugin) {
+        manager.disablePlugin(plugin);
+    }
+
+    /**
+     * @return The plugin manager
+     */
+    public PluginManager getPluginManager() {
+        return manager;
+    }
+
+    /**
+     * @return Breeze's logger
+     */
+    public Logger getLogger() {
+        return logger;
     }
 
     /**
@@ -127,6 +155,16 @@ public class Breeze {
     }
 
     /**
+     * Returns a BreezePlugin named like parameter
+     *
+     * @param name plugin name
+     * @return BreezePlugin found
+     */
+    public BreezePlugin getPlugin(String name) {
+        return manager.getPlugin(name);
+    }
+
+    /**
      * Does everything it can during a reload
      */
     public void disable() {
@@ -137,7 +175,5 @@ public class Breeze {
         this.eventManager = null;
         this.logger = null;
         this.manager = null;
-        
-        System.gc();
     }
 }
