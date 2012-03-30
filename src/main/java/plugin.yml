@@ -7,18 +7,6 @@ main: com.Acrobot.ChestShop.ChestShop
 description: A sign&chest shop for economy plugins
 
 softdepend: [Permissions, LWC, Lockette, Deadbolt, OddItem]
-
-commands:
-  iteminfo:
-    aliases: [iinfo]
-    description: Shows the item id and name
-    usage: |
-           /<command> §2(what's the item in hand?)
-           /<command> §712§f §2(what's the item with ID §712§2?)
-           /<command> §7log§f §2(what's the item ID of §7LOG§2?) 
-  csversion:
-    description: Shows ChestShop's version
-    usage: /<command>
     
 permissions:
   ChestShop.*:

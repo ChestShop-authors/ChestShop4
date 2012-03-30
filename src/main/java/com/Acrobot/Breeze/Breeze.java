@@ -83,6 +83,7 @@ public class Breeze {
     /**
      * Registers the commands class
      *
+     * @param plugin Plugin that is registering that commands
      * @param clazz The class
      */
     public void registerCommands(BreezePlugin plugin, Class clazz) {

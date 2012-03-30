@@ -1,6 +1,7 @@
 package com.Acrobot.ChestShop;
 
 import com.Acrobot.Breeze.Breeze;
+import com.Acrobot.ChestShop.Modules.BasicCommands.ItemInfo;
 import com.Acrobot.ChestShop.Modules.Disabling.DisablingModule;
 import com.Acrobot.ChestShop.Modules.TestModule.TestModule;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,7 +28,6 @@ public class ChestShop extends JavaPlugin {
      */
     public void onDisable() {
         breeze.disable();
-
         breeze = null;
         
         System.gc();
@@ -48,6 +48,8 @@ public class ChestShop extends JavaPlugin {
     private void registerDefaultModules() {
         breeze.registerModule(new TestModule());
         breeze.registerModule(new DisablingModule());
+
+        breeze.registerModule(new ItemInfo());
 
         breeze.loadPlugins();
     }

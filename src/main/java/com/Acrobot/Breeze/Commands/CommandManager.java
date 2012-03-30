@@ -46,7 +46,8 @@ public class CommandManager {
     /**
      * Registers a command class
      *
-     * @param clazz the command class
+     * @param clazz  the command class
+     * @param plugin Plugin that is registering the commands
      */
     public void registerCommand(Class clazz, BreezePlugin plugin) {
         for (final Method m : clazz.getMethods()) {
@@ -64,7 +65,12 @@ public class CommandManager {
                 @Override
                 public boolean execute(CommandSender commandSender, String currentAlias, String[] args) {
                     try {
-                        return (Boolean) m.invoke(null, commandSender, currentAlias, args);
+                        if (!(Boolean) m.invoke(null, commandSender, currentAlias, args)) {
+                            commandSender.sendMessage(usageMessage.split("\n"));
+                            return false;
+                        } else {
+                            return true;
+                        }
                     } catch (InvocationTargetException e) {
                         e.printStackTrace();
                     } catch (IllegalAccessException e) {
@@ -77,7 +83,7 @@ public class CommandManager {
             };
 
             if (!registerCommand(cmd)) {
-                br.logger.severe("Couldn't register command: " + command.command());
+                br.getLogger().severe("Couldn't register command: " + command.command());
             } else {
                 if (commands.containsKey(plugin)) {
                     commands.get(plugin).add(cmd);
@@ -86,6 +92,7 @@ public class CommandManager {
                     list.add(cmd);
                     commands.put(plugin, list);
                 }
+                br.getLogger().info("Registered command: " + command.command());
             }
         }
     }

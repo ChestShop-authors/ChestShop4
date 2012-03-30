@@ -30,7 +30,7 @@ public class PluginManager {
     public void initializePlugins() {
         File pluginFolder = breeze.getPluginFolder();
 
-        plugins = mergeSets(plugins, loader.load(pluginFolder));
+        plugins = loader.load(pluginFolder);
 
         for (BreezePlugin plugin : plugins) {
             initializePlugin(plugin);
@@ -45,6 +45,8 @@ public class PluginManager {
     public void initializePlugin(BreezePlugin plugin) {
         plugins.add(plugin);
         plugin.initialize(new File(breeze.getPluginFolder(), plugin.getName()), breeze);
+
+        breeze.getLogger().info("Plugin \'" + plugin.getName() + "\' was turned on");
     }
 
     /**
@@ -55,6 +57,7 @@ public class PluginManager {
      */
     public BreezePlugin getPlugin(String name) {
         for (BreezePlugin plugin : plugins) {
+            System.out.println("Does " + name + " equal " + plugin.getName() + "? " + (plugin.getName().equals(name)));
             if (plugin.getName().equals(name)) {
                 return plugin;
             }
@@ -67,8 +70,11 @@ public class PluginManager {
      */
     public void disablePlugins() {
         for (BreezePlugin plugin : plugins) {
-            disablePlugin(plugin);
+            plugin.onDisable();
+            unregisterPlugin(plugin, false);
         }
+
+        plugins = null;
     }
 
     /**
@@ -77,10 +83,36 @@ public class PluginManager {
      * @param plugin plugin to disable
      */
     public void disablePlugin(BreezePlugin plugin) {
-        plugin.disable();
+        plugin.onDisable();
 
+        unregisterPlugin(plugin);
+    }
+
+    /**
+     * Unregisters a plugin without calling onDisable()
+     * DON'T USE IT if you want to disable plugin
+     *
+     * @param plugin plugin to unregister
+     */
+    public void unregisterPlugin(BreezePlugin plugin) {
+        unregisterPlugin(plugin, true);
+    }
+
+    /**
+     * Unregister a plugin without calling onDisable()
+     *
+     * @param plugin        plugin to unregister
+     * @param removeFromSet Should the plugin be removed from the "plugins" set?
+     */
+    public void unregisterPlugin(BreezePlugin plugin, boolean removeFromSet) {
         breeze.eventManager.unregisterEvents(plugin);
         breeze.cmdManager.unregisterCommands(plugin);
+
+        if (removeFromSet) {
+            plugins.remove(plugin);
+        }
+
+        breeze.getLogger().info("Plugin \'" + plugin.getName() + "\' was turned off");
     }
 
 

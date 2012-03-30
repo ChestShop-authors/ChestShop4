@@ -6,14 +6,20 @@ import org.bukkit.entity.Player;
  * @author Acrobot
  */
 public enum Permission {
-    SHOP_CREATION("ChestShop.shop.create"),
+    SHOP_CREATION_BUY("ChestShop.shop.create.buy"),
+    SHOP_CREATION_SELL("ChestShop.shop.create.sell"),
+
+    SHOP_CREATION_ID("ChestShop.shop.create."),
+
     BUY("ChestShop.shop.buy"),
     BUY_ID("ChestShop.shop.buy."),
+
     SELL_ID("ChestShop.shop.sell."),
     SELL("ChestShop.shop.sell"),
+
     ADMIN("ChestShop.admin"),
     MOD("ChestShop.mod"),
-    OTHER_NAME("ChestShop.name.");
+    NOFEE("ChestShop.nofee");
 
     private final String permission;
 

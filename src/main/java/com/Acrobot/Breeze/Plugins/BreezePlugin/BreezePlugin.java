@@ -57,9 +57,10 @@ public abstract class BreezePlugin implements EnablingPlugin, NamedPlugin {
     }
 
     /**
-     * Executed when Breeze is being disabled
+     * Executed when BreezePlugin is being disabled
      */
     public final void disable() {
         onDisable();
+        getBreeze().getPluginManager().unregisterPlugin(this);
     }
 }
