@@ -1,36 +1,27 @@
 package com.Acrobot.Breeze.Events.Cancelables;
 
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
 
 /**
  * @author Acrobot
  */
-public abstract class CancellableEvent extends Event {
-    protected Result result;
-    protected static final HandlerList handlers = new HandlerList();
-
+public abstract class CancellableEvent extends Event implements Cancellable {
+    protected boolean cancelled;
 
     /**
-     * What will be the result of the event?
+     * @return Is the event cancelled?
+     */
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    /**
+     * Cancels the event
      *
-     * @param result the Result for this event
+     * @param cancelled Whether to cancel the event
      */
-    public void setResult(Result result) {
-        this.result = result;
-    }
-
-    /**
-     * @return Is the event allowed?
-     */
-    public Result getResult() {
-        return result;
-    }
-
-    /**
-     * @return The HandlerList for this event
-     */
-    public HandlerList getHandlers() {
-        return handlers;
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 }

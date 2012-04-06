@@ -16,7 +16,7 @@ public class StringUtil {
         string = string.toLowerCase();
 
         String[] split = string.split(Character.toString(separator));
-        StringBuilder total = new StringBuilder(3);
+        StringBuilder total = new StringBuilder(string.length());
 
         for (String s : split) {
             total.append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).append(' ');
@@ -34,5 +34,21 @@ public class StringUtil {
      */
     public static String capitalizeFirstLetter(String string) {
         return capitalizeFirstLetter(string, ' ');
+    }
+
+    /**
+     * Joins a String array
+     *
+     * @param array array to join
+     * @return Joined array
+     */
+    public static String joinArray(String[] array) {
+        StringBuilder b = new StringBuilder(array.length * 15);
+
+        for (String str : array) {
+            b.append(str).append(' ');
+        }
+
+        return b.toString();
     }
 }

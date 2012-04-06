@@ -1,9 +1,13 @@
 package com.Acrobot.ChestShop;
 
 import com.Acrobot.Breeze.Breeze;
-import com.Acrobot.ChestShop.Modules.BasicCommands.ItemInfo;
-import com.Acrobot.ChestShop.Modules.Disabling.DisablingModule;
-import com.Acrobot.ChestShop.Modules.TestModule.TestModule;
+import com.Acrobot.Breeze.Plugins.BreezePlugin.BreezePlugin;
+import com.Acrobot.ChestShop.Commands.ItemInfo;
+import com.Acrobot.ChestShop.Modules.Debug.DebugModule;
+import com.Acrobot.ChestShop.Modules.Language.Language;
+import com.Acrobot.ChestShop.Modules.Prefix.Prefix;
+import com.Acrobot.ChestShop.Modules.ShopModule.ShopModule;
+import com.Acrobot.ChestShop.Modules.SignModule.SignModule;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
@@ -29,8 +33,8 @@ public class ChestShop extends JavaPlugin {
     public void onDisable() {
         breeze.disable();
         breeze = null;
-        
-        System.gc();
+
+        System.gc(); //This has to be here, otherwise old version of plugins can remain in memory
     }
 
     /**
@@ -46,12 +50,26 @@ public class ChestShop extends JavaPlugin {
      * Registers the default modules
      */
     private void registerDefaultModules() {
-        breeze.registerModule(new TestModule());
-        breeze.registerModule(new DisablingModule());
+        registerCommands();
 
-        breeze.registerModule(new ItemInfo());
+        breeze.registerModule(new SignModule());
+        breeze.registerModule(new ShopModule());
+        breeze.registerModule(new DebugModule());
+
+        breeze.registerModule(new Language());
+        breeze.registerModule(new Prefix());
 
         breeze.loadPlugins();
+    }
+
+    /**
+     * Registers commands
+     */
+    private void registerCommands() {
+        CommandModule module = new CommandModule();
+        breeze.registerModule(module);
+
+        breeze.registerCommands(module, ItemInfo.class);
     }
 
     /**
@@ -61,5 +79,16 @@ public class ChestShop extends JavaPlugin {
      */
     public static Logger getBukkitLogger() {
         return breeze.logger;
+    }
+
+    /**
+     * A default module for using commands
+     */
+    private class CommandModule extends BreezePlugin {
+        public void onEnable() {
+        }
+
+        public void onDisable() {
+        }
     }
 }

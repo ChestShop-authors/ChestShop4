@@ -95,7 +95,9 @@ public class BreezeConfiguration extends YamlConfiguration {
 
             bw.close();
 
-            load();
+            if (changed) {
+                load();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

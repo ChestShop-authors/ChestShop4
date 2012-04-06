@@ -57,6 +57,16 @@ public abstract class BreezePlugin implements EnablingPlugin, NamedPlugin {
     }
 
     /**
+     * Returns module name
+     * By default returns class' simple name
+     *
+     * @return Module name
+     */
+    public String getName() {
+        return getClass().getSimpleName();
+    }
+
+    /**
      * Executed when BreezePlugin is being disabled
      */
     public final void disable() {

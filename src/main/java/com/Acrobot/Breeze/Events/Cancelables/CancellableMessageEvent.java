@@ -3,7 +3,7 @@ package com.Acrobot.Breeze.Events.Cancelables;
 /**
  * @author Acrobot
  */
-public class CancellableMessageEvent extends CancellableEvent {
+public abstract class CancellableMessageEvent extends CancellableEvent {
     protected String message;
 
     /**

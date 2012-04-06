@@ -57,7 +57,6 @@ public class PluginManager {
      */
     public BreezePlugin getPlugin(String name) {
         for (BreezePlugin plugin : plugins) {
-            System.out.println("Does " + name + " equal " + plugin.getName() + "? " + (plugin.getName().equals(name)));
             if (plugin.getName().equals(name)) {
                 return plugin;
             }
